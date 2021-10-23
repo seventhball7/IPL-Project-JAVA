@@ -13,6 +13,9 @@ public class MainClass {
     static Map<String, Integer> RunsByBatsmenIn2016 = new HashMap<>();
     static ArrayList<String> teamsWonTossAndMatchin2016=new ArrayList<>();
     static ArrayList<String>  playerOftheMatchin2010=new ArrayList<>();
+    static Map<String, Integer> matchesWonInBangalorePerTeam=new HashMap<>();
+    static int totalSixesByDhoni;
+    static Map<String,Float> strikeRateOfKohli=new HashMap<>();
 
     static void totalMatchesPlayedPerYear(String line) {
         String[] value = line.split(",");
@@ -111,6 +114,51 @@ public class MainClass {
         }
     }
 
+ static void  matchesWonInBangalorePerTeam(ArrayList<String > matchesData){
+        for(int i=0;i<matchesData.size();i++){
+            String[] arr=matchesData.get(i).split(",");
+            if(arr[2].equals("Bangalore")){
+                if(matchesWonInBangalorePerTeam.containsKey(arr[10])){
+                    matchesWonInBangalorePerTeam.put(arr[10],matchesWonInBangalorePerTeam.get(arr[10])+1);
+                }
+                else{
+                    matchesWonInBangalorePerTeam.put(arr[10],1);
+                }
+            }
+        }
+ }
+
+ static  void totalSixesByMsDhoni(ArrayList<String> deliveryData){
+     for(int i=0;i<deliveryData.size();i++){
+         String[] arr=deliveryData.get(i).split(",");
+         if(arr[6].equals("MS Dhoni")){
+             if(arr[15].equals("6")){
+                 totalSixesByDhoni += 1;
+             }
+         }
+     }
+ }
+static void strikeRateOfViratKohli(ArrayList<String> deliveryData){
+        Map<String,Integer> totalRunsByKohli=new HashMap<>();
+        Map<String,Integer> totalBallsByKohli=new HashMap<>();
+        for(int i=0;i<deliveryData.size();i++){
+            String[] arr=deliveryData.get(i).split(",");
+            if(arr[6].equals("V Kohli")){
+                if(totalBallsByKohli.containsKey(arr[6])){
+                    totalBallsByKohli.put(arr[6],totalBallsByKohli.get(arr[6])+1);
+                    totalRunsByKohli.put(arr[6],totalRunsByKohli.get(arr[15])+Integer.parseInt(arr[15]));
+                }
+                else{
+                    totalBallsByKohli.put(arr[6],1);
+                    totalRunsByKohli.put(arr[6],Integer.parseInt(arr[15]));
+                }
+                strikeRateOfKohli.put(arr[6],totalRunsByKohli.get(arr[15])*100/totalBallsByKohli.get(arr[6]));
+            }
+
+
+        }
+}
+
     public static void main(String[] args) throws FileNotFoundException {
         String matchesPath = "/home/sameer/IdeaProjects/IPL-JAVA/src/matches.csv";
         String deliveriesPath = "/home/sameer/IdeaProjects/IPL-JAVA/src/deliveries.csv";
@@ -144,6 +192,9 @@ public class MainClass {
             runsMadeByBatsmenIn2016(matchesidOf2016, deliveryData);
             teamsWonTossAndMatchin2016(matchesData);
             playerOftheMatchin2010(matchesData);
+            matchesWonInBangalorePerTeam(matchesData);
+            totalSixesByMsDhoni(deliveryData);
+            strikeRateOfViratKohli(deliveryData);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
@@ -155,6 +206,9 @@ public class MainClass {
         System.out.println("5. Runs made by batsmen in 2016: \n" + RunsByBatsmenIn2016);
         System.out.println("6. Teams who won the toss and match in 2016: \n"+ teamsWonTossAndMatchin2016);
         System.out.println("7. Player of the match in year 2010: \n"+  playerOftheMatchin2010);
+        System.out.println("8. Matches won in Bangalore per team: \n"+ matchesWonInBangalorePerTeam);
+        System.out.println("9. Total sixes by Dhoni in all Season: \n"+ totalSixesByDhoni);
+
     }
 }
 
