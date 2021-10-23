@@ -11,7 +11,8 @@ public class MainClass {
     static Map<String, Integer> extraRunsin2016 = new HashMap<>();
     static Map<String, Float> economyBowlersin2015 = new HashMap<>();
     static Map<String, Integer> RunsByBatsmenIn2016 = new HashMap<>();
-
+    static ArrayList<String> teamsWonTossAndMatchin2016=new ArrayList<>();
+    static ArrayList<String>  playerOftheMatchin2010=new ArrayList<>();
 
     static void totalMatchesPlayedPerYear(String line) {
         String[] value = line.split(",");
@@ -90,6 +91,26 @@ public class MainClass {
         }
     }
 
+    static void teamsWonTossAndMatchin2016( ArrayList<String> matchesData){
+        for(int i=0;i<matchesData.size();i++){
+            String[] arr=matchesData.get(i).split(",");
+              if(arr[1].equals("2016")){
+                  if(arr[6].equals(arr[10])){
+                      teamsWonTossAndMatchin2016.add(arr[6]);
+                  }
+              }
+        }
+    }
+
+    static void  playerOftheMatchin2010(ArrayList<String> matchesData){
+        for(int i=0;i<matchesData.size();i++){
+            String[] arr=matchesData.get(i).split(",");
+            if(arr[1].equals("2010")){
+                playerOftheMatchin2010.add(arr[13]);
+            }
+        }
+    }
+
     public static void main(String[] args) throws FileNotFoundException {
         String matchesPath = "/home/sameer/IdeaProjects/IPL-JAVA/src/matches.csv";
         String deliveriesPath = "/home/sameer/IdeaProjects/IPL-JAVA/src/deliveries.csv";
@@ -102,8 +123,10 @@ public class MainClass {
             in.readLine();
             ArrayList<String> matchesidOf2016 = new ArrayList<>();
             ArrayList<String> matchesidof2015 = new ArrayList<>();
+            ArrayList<String> matchesData = new ArrayList<>();
             ArrayList<String> deliveryData = new ArrayList<>();
             while ((matchesDataPerLine = br.readLine()) != null) {
+                matchesData.add(matchesDataPerLine);
                 totalMatchesPlayedPerYear(matchesDataPerLine);
                 matchesWonAllTeamAllYear(matchesDataPerLine);
                 if (matchesDataPerLine.split(",")[1].equals("2016")) {
@@ -119,6 +142,8 @@ public class MainClass {
             extraRunsConceded(matchesidOf2016, deliveryData);
             economicaLBowlersof2015(matchesidof2015, deliveryData);
             runsMadeByBatsmenIn2016(matchesidOf2016, deliveryData);
+            teamsWonTossAndMatchin2016(matchesData);
+            playerOftheMatchin2010(matchesData);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
@@ -128,6 +153,8 @@ public class MainClass {
         System.out.println("2. Number of matches won of all teams over all the years of IPL: \n" + matchesWonAllTeamAllYear);
         System.out.println("3. For the year 2016 the extra runs conceded per team: \n" + extraRunsin2016);
         System.out.println("5. Runs made by batsmen in 2016: \n" + RunsByBatsmenIn2016);
+        System.out.println("6. Teams who won the toss and match in 2016: \n"+ teamsWonTossAndMatchin2016);
+        System.out.println("7. Player of the match in year 2010: \n"+  playerOftheMatchin2010);
     }
 }
 
