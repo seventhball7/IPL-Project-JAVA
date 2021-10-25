@@ -2,8 +2,10 @@ package com.ipl;
 
 public class Matches {
     private int matchId;
-   private int season;
-   private String city;
+    private int season;
+    private String city;
+    private String toss_winner;
+    private String winner;
 
     public int getMatchId() {
         return matchId;
@@ -45,7 +47,5 @@ public class Matches {
         this.winner = winner;
     }
 
-    private String toss_winner;
-   private  String winner;
 
 }
