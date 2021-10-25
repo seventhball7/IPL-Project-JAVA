@@ -7,6 +7,16 @@ public class Matches {
     private String toss_winner;
     private String winner;
 
+    public String getPlayerOfTheMatch() {
+        return playerOfTheMatch;
+    }
+
+    public void setPlayerOfTheMatch(String playerOfTheMatch) {
+        this.playerOfTheMatch = playerOfTheMatch;
+    }
+
+    private String playerOfTheMatch;
+
     public int getMatchId() {
         return matchId;
     }

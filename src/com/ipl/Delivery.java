@@ -9,7 +9,16 @@ public class Delivery {
     private String batsman;
     private String bowler;
     private int batsmanRuns;
+    private int extraRuns;
     private int totalRuns;
+
+    public int getExtraRuns() {
+        return extraRuns;
+    }
+
+    public void setExtraRuns(int extraRuns) {
+        this.extraRuns = extraRuns;
+    }
 
     public int getMatchId() {
         return matchId;

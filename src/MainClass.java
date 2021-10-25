@@ -39,6 +39,7 @@ public class MainClass {
     }
 
 
+
     static void extraRunsConceded(ArrayList<String> listIdof2016, ArrayList<String> deliveryData) {
         for (int i = 0; i < deliveryData.size(); i++) {
             String[] arr = deliveryData.get(i).split(",");
@@ -51,7 +52,6 @@ public class MainClass {
             }
         }
     }
-
 
     static void economicaLBowlersof2015(List<String> listIdof2015, List<String> deliveryData) {
         Map<String, Integer> bowlersWithRuns = new HashMap<>();
