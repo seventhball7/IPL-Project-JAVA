@@ -38,6 +38,9 @@ public class Main {
         runsMadeByBatsmenIn2016(matches,delivery);
         teamsWonTossAndMatchin2016(matches);
         playerOftheMatchin2010(matches);
+        matchesWonInBangalorePerTeam(matches);
+        totalSixesByMsDhoni(delivery);
+        strikeRateOfViratKohli(delivery);
     }
 
     private static List<Matches> getMatchesData() throws IOException {
@@ -221,6 +224,54 @@ public class Main {
             }
         }
       System.out.println("7. Player of the match in year 2010: \n" + playerOftheMatchin2010);
+    }
+    private static void matchesWonInBangalorePerTeam(List<Matches> matchesData) {
+        Map<String, Integer> matchesWonInBangalorePerTeam = new HashMap<>();
+        for (Matches match:matchesData) {
+            String city=match.getCity();
+            if (city.equals("Bangalore")) {
+                String winner=match.getWinner();
+                if (matchesWonInBangalorePerTeam.containsKey(winner)) {
+                    matchesWonInBangalorePerTeam.put(winner, matchesWonInBangalorePerTeam.get(winner) + 1);
+                } else {
+                    matchesWonInBangalorePerTeam.put(winner, 1);
+                }
+            }
+        }
+        System.out.println("8. Matches won in Bangalore per team: \n" + matchesWonInBangalorePerTeam);
+    }
+    private static void totalSixesByMsDhoni(List<Delivery> deliveryData) {
+        int totalSixesByDhoni=0;
+        for (Delivery delivery:deliveryData) {
+            String batsman=delivery.getBatsman();
+            if (batsman.equals("MS Dhoni")) {
+                int runs=delivery.getBatsmanRuns();
+                if (runs == 6) {
+                    totalSixesByDhoni += 1;
+                }
+            }
+        }
+        System.out.println("9. Total sixes by Dhoni in all Season: \n" + totalSixesByDhoni);
+    }
+   private static void strikeRateOfViratKohli(List<Delivery> deliveryData) {
+        Map<String, Integer> totalRunsByKohli = new HashMap<>();
+        Map<String, Integer> totalBallsByKohli = new HashMap<>();
+        Map<String, Float> strikeRateOfKohli = new HashMap<>();
+        for (Delivery delivery:deliveryData) {
+            String batsman=delivery.getBatsman();
+            if (batsman.equals("V Kohli")) {
+                int runs=delivery.getBatsmanRuns();
+                if (totalBallsByKohli.containsKey(batsman)) {
+                    totalBallsByKohli.put(batsman, totalBallsByKohli.get(batsman) + 1);
+                    totalRunsByKohli.put(batsman, totalRunsByKohli.get(batsman) +runs);
+                } else {
+                    totalBallsByKohli.put(batsman, 1);
+                    totalRunsByKohli.put(batsman,runs);
+                }
+                strikeRateOfKohli.put(batsman, (float) (totalRunsByKohli.get(batsman) * 100 / totalBallsByKohli.get(batsman)));
+            }
+        }
+       System.out.println("10. Strike rate of Virat Kolhi of all time: \n" + strikeRateOfKohli);
     }
 }
 
