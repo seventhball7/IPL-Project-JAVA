@@ -5,6 +5,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class Main {
@@ -30,6 +31,9 @@ public class Main {
     public static void main(String[] args) throws IOException {
         List<Matches> matches=getMatchesData();
         List<Delivery> delivery=getDeliveryData();
+
+        totalMatchesPlayedPerYear(matches);
+        matchesWonAllTeamAllYear(matches);
     }
 
     private static List<Matches> getMatchesData() throws IOException {
@@ -48,7 +52,6 @@ public class Main {
                 match.setToss_winner(data[MATCH_TOSS_WINNER]);
                 match.setWinner(data[MATCH_WINNER]);
                 matchesData.add(match);
-
             }
 
         }
@@ -88,6 +91,33 @@ public class Main {
         return deliveryData;
     }
 
+   private static void totalMatchesPlayedPerYear(List<Matches> matchData) {
+        HashMap<Integer, Integer> totalMatchesPerYear = new HashMap<>();
+        for(Matches match:matchData){
+            int a=match.getSeason();
+           if(totalMatchesPerYear.containsKey(a)){
+               totalMatchesPerYear.put(a,totalMatchesPerYear.get(a)+1);
+           }else{
+               totalMatchesPerYear.put(a,1);
+           }
+        }
+       System.out.println("1. matches played per year of all the years in IPL: \n" + totalMatchesPerYear);
+    }
+
+    private static void matchesWonAllTeamAllYear(List<Matches> matchData) {
+         HashMap<String, Integer> matchesWonAllTeamAllYear = new HashMap<>();
+        for(Matches match:matchData){
+            String a=match.getWinner();
+            if (a != "") {
+                if (matchesWonAllTeamAllYear.containsKey(a)) {
+                    matchesWonAllTeamAllYear.put(a, matchesWonAllTeamAllYear.get(a) + 1);
+                } else {
+                    matchesWonAllTeamAllYear.put(a, 1);
+                }
+            }
+        }
+        System.out.println("2. Number of matches won of all teams over all the years of IPL: \n" + matchesWonAllTeamAllYear);
+    }
 }
 
 
